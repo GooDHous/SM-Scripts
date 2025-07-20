@@ -1,41 +1,69 @@
--- Верните функцию, которая создает вкладки
 return function(Window, Rayfield)
-    -- Создаем вкладку для игры
-    local gameTab = Window:CreateTab("Game Features", 7733960981)
+    -- Получаем название игры
+    local gameName = "Current Game"
+    pcall(function()
+        gameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+    end)
+
+    -- Создаем вкладку
+    local gameTab = Window:CreateTab(gameName, 7733960981)
     
-    -- Секция для автофарма
+    -- Секция автофарма
     local farmSection = gameTab:CreateSection("Auto Farm")
     
-    -- Авто-фарм ресурсов
+    -- Auto Gem Farm
     gameTab:CreateToggle({
-        Name = "💰 Auto Farm",
+        Name = "💎 Auto Gem Farm",
         CurrentValue = false,
         SectionParent = farmSection,
         Callback = function(Value)
-            _G.AutoFarm = Value
-            while _G.AutoFarm and task.wait() do
-                -- Ваш код фарма
+            _G.AutoGem = Value
+            while _G.AutoGem and task.wait(0.1) do
+                pcall(function()
+                    game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(5)
+                end)
             end
         end
     })
     
-    -- Секция для телепортации
-    local tpSection = gameTab:CreateSection("Teleport")
-    
-    -- Телепорт к точке
-    gameTab:CreateButton({
-        Name = "📍 Teleport to Base",
-        SectionParent = tpSection,
-        Callback = function()
-            -- Код телепортации
+    -- Auto Chest Farm
+    gameTab:CreateToggle({
+        Name = "💰 Auto Chest Farm",
+        CurrentValue = false,
+        SectionParent = farmSection,
+        Callback = function(Value)
+            _G.AutoChest = Value
+            while _G.AutoChest and task.wait(0.1) do
+                pcall(function()
+                    game:GetService("ReplicatedStorage").Remotes.TreasureEvent:FireServer("Chest")
+                end)
+            end
         end
     })
+
+    -- Секция телепортации
+    local tpSection = gameTab:CreateSection("Teleport")
     
+    -- Insta-Win
+    gameTab:CreateToggle({
+        Name = "🏆 Insta-Win",
+        CurrentValue = false,
+        SectionParent = tpSection,
+        Callback = function(Value)
+            _G.InstaWin = Value
+            while _G.InstaWin and task.wait(0.5) do
+                pcall(function()
+                    -- Ваш код телепортации к WinPart
+                end)
+            end
+        end
+    })
+
     -- Уведомление о загрузке
     Rayfield:Notify({
-        Title = "Game Features",
+        Title = gameName.." Features",
         Content = "Special features loaded!",
-        Duration = 3,
+        Duration = 5,
         Image = 7733960981
     })
 end
