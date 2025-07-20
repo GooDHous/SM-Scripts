@@ -1,46 +1,42 @@
--- Просто создаем вкладку и добавляем элементы
+-- Создаем вкладку
 local tab = Window:CreateTab("Game Features", 7733960981)
 
--- 1. Auto Gem Farm (ваша оригинальная функция)
-_G.AutoGemFarm = false
-tab:CreateToggle({
+-- 1. Auto Gem Farm (ваш код)
+local gemToggle = tab:CreateToggle({
     Name = "💎 Auto Gem Farm",
-    CurrentValue = _G.AutoGemFarm,
+    CurrentValue = false,
     Callback = function(Value)
-        _G.AutoGemFarm = Value
-        while _G.AutoGemFarm do
+        _G.AutoGem = Value
+        while _G.AutoGem do
             game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(5)
             task.wait(0.1)
         end
     end
 })
 
--- 2. Auto Chest Farm (ваша оригинальная функция)
-_G.AutoChestFarm = false
-tab:CreateToggle({
+-- 2. Auto Chest Farm (ваш код)
+local chestToggle = tab:CreateToggle({
     Name = "💰 Auto Chest Farm",
-    CurrentValue = _G.AutoChestFarm,
+    CurrentValue = false,
     Callback = function(Value)
-        _G.AutoChestFarm = Value
-        while _G.AutoChestFarm do
+        _G.AutoChest = Value
+        while _G.AutoChest do
             game:GetService("ReplicatedStorage").Remotes.TreasureEvent:FireServer("Chest")
             task.wait(0.1)
         end
     end
 })
 
--- 3. Insta-Win (ваша оригинальная функция)
-_G.InstaWinLoop = false
-tab:CreateToggle({
+-- 3. Insta-Win (ваш код)
+local winToggle = tab:CreateToggle({
     Name = "🏆 Insta-Win",
-    CurrentValue = _G.InstaWinLoop,
+    CurrentValue = false,
     Callback = function(Value)
-        _G.InstaWinLoop = Value
-        while _G.InstaWinLoop do
+        _G.InstaWin = Value
+        while _G.InstaWin do
             local player = game.Players.LocalPlayer
-            local char = player.Character
-            if char then
-                local hrp = char:FindFirstChild("HumanoidRootPart")
+            if player.Character then
+                local hrp = player.Character:FindFirstChild("HumanoidRootPart")
                 if hrp then
                     for i = 1, 10 do
                         local world = workspace:FindFirstChild("World"..i)
@@ -57,4 +53,12 @@ tab:CreateToggle({
             task.wait(0.5)
         end
     end
+})
+
+-- Уведомление о загрузке
+Rayfield:Notify({
+    Title = "Game Features Loaded",
+    Content = "Special features activated!",
+    Duration = 3,
+    Image = 7733960981
 })
