@@ -1,8 +1,8 @@
---==[ Load SMUI UI ]==--
-local SMUI = loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/libui.lua'))()
+--==[ Load RayField UI ]==--
+local RayField = loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/libui.lua'))()
 
 --==[ Create Window ]==--
-local Window = SMUI:CreateWindow({
+local Window = RayField:CreateWindow({
     Name = "SM-Script Hub",
     LoadingTitle = "Universal script for SM-Script Hub",
     LoadingSubtitle = "Made by SM-Team",
@@ -84,13 +84,15 @@ end)
 
 universal:CreateButton({
    Name = "Fly Menu",
-   Callback = loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/fly.lua'))()
+   Callback = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/fly.lua'))()
    end,
 })
 
 universal:CreateButton({
    Name = "Server hop",
-   Callback = loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/serverhop.lua'))()
+   Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/serverhop.lua'))()
    end,
 })
 
@@ -99,7 +101,7 @@ universal:CreateButton({
 settingsTab:CreateButton({
     Name = "Unload The GUI",
       Callback = function()
-        SMUI:Destroy()
+        RayField:Destroy()
         task.wait(1)
         loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/libui.lua'))()
     end,
@@ -107,7 +109,7 @@ settingsTab:CreateButton({
 
 --==[ Credits Tab ]==--
 creditsTab:CreateLabel("Made by SM-Team")
-creditsTab:CreateLabel("UI Framework: SMUI (RayField Fork)")
+creditsTab:CreateLabel("UI Framework: RayField (RayField Fork)")
 creditsTab:CreateLabel("Special thanks to you for using it!")
 
 succ_loaded = true
