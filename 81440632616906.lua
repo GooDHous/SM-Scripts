@@ -1,9 +1,9 @@
 
 local function CreateExtraTabs()
 
-    local PlaceTabs = Window:CreateTab(local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId), 7733960981)
+    local PlaceTabs = Window:CreateTab("Dig to earth`s core", 7733960981)
 
-    PlaceTabs:CreateToggle({
+PlaceTabs:CreateToggle({
     Name = "рџ’° Chest Auto Farm",
     CurrentValue = false,
     SectionParent = farmingSection,
@@ -139,7 +139,6 @@ PlaceTabs:CreateToggle({
 })
 
 
--- Execute tab creation
+
 CreateExtraTabs()
 
--- Optional: Notification when tabs load
