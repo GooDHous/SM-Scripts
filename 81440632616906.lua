@@ -1,7 +1,7 @@
 -- Все функции теперь полностью самодостаточны
 
 -- Создаем вкладку
-local tab = Window:CreateTab("Dig To Earth`s Core")
+local tab = Window:CreateTab("Dig To Earth`s Core", 8581940575)
 local farmingSection = tab:CreateSection("💸 Farming")
 -- Добавляем элементы
 
