@@ -10,7 +10,13 @@ tab:CreateToggle({
     CurrentValue = false,
     SectionParent = farmingSection,
     Callback = function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/81440632616906/AutoChestFarm.lua'))()                 
+    _G.autoChestFarm = CurrentValue
+        task.spawn(function()
+            while _G.autoChestFarm do
+                task.wait(0)
+                game:GetService("ReplicatedStorage").Remotes.TreasureEvent:FireServer("Chest")
+            end
+        end)              
     end,
 })
 
@@ -19,15 +25,27 @@ tab:CreateToggle({
     CurrentValue = false,
     SectionParent = farmingSection,
     Callback = function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/81440632616906/AutoGem.lua'))()                        
+    _G.infiniteDominusPet = CurrentValue
+        task.spawn(function()
+            while _G.infiniteDominusPet do
+                task.wait(0.0)
+                game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(5)
+            end
+        end)                      
     end,
 })
 tab:CreateToggle({
-    Name = "💰 Auto Farm Coins",
+    Name = "💰 Auto Farm cash",
     CurrentValue = false,
     SectionParent = farmingSection,
     Callback = function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/81440632616906/AutoCash.lua'))()        
+    _G.infiniteDominusPet = CurrentValue
+        task.spawn(function()
+            while _G.infiniteDominusPet do
+                task.wait(0.0)
+                game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(8)
+            end
+        end)        
     end,
 })
 tab:CreateToggle({
@@ -35,7 +53,13 @@ tab:CreateToggle({
     CurrentValue = false,
     SectionParent = farmingSection,
     Callback = function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/81440632616906/AutoTripleDominus.lua'))()                         
+    _G.infiniteDominusPet = CurrentValue
+        task.spawn(function()
+            while _G.infiniteDominusPet do
+                task.wait(0.0)
+                game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(4)
+            end
+        end)                        
     end,
 })          
 tab:CreateToggle({
@@ -43,7 +67,15 @@ tab:CreateToggle({
     CurrentValue = false,
     SectionParent = farmingSection,
     Callback = function()         
-    loadstring(game:HttpGet(''))()        
+    _G.autoSpinFarm = CurrentValue
+        task.spawn(function()
+            while _G.autoSpinFarm do
+                task.wait(0.5)
+                pcall(function()
+                    game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(3)
+                end)
+            end
+        end)       
     end,
 })
 
