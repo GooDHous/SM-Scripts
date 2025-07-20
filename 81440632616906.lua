@@ -1,96 +1,41 @@
--- external_tabs.lua
-return function(Window, Rayfield)  -- Принимаем Window и Rayfield как аргументы
-    -- Получаем информацию об игре
-    local gameName = "Current Game"
-    local success, gameInfo = pcall(function()
-        return game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
-    end)
-    if success and gameInfo then
-        gameName = gameInfo.Name
-    end
-
-    -- Создаем вкладку для конкретной игры
-    local gameTab = Window:CreateTab(gameName, 7733960981)
+-- Верните функцию, которая создает вкладки
+return function(Window, Rayfield)
+    -- Создаем вкладку для игры
+    local gameTab = Window:CreateTab("Game Features", 7733960981)
     
-    -- Секция для автоматизации
-    local autoSection = gameTab:CreateSection("Auto Farm")
+    -- Секция для автофарма
+    local farmSection = gameTab:CreateSection("Auto Farm")
     
-    -- Auto Gem Farm
+    -- Авто-фарм ресурсов
     gameTab:CreateToggle({
-        Name = "💎 Auto Gem Farm",
+        Name = "💰 Auto Farm",
         CurrentValue = false,
-        SectionParent = autoSection,
+        SectionParent = farmSection,
         Callback = function(Value)
-            _G.AutoGemFarm = Value
-            if Value then
-                Rayfield:Notify({
-                    Title = "Auto Gem",
-                    Content = "Enabled automatic gem farming",
-                    Duration = 3,
-                    Image = 7733960981
-                })
-            end
-            while _G.AutoGemFarm and task.wait(0.1) do
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(5)
-                end)
+            _G.AutoFarm = Value
+            while _G.AutoFarm and task.wait() do
+                -- Ваш код фарма
             end
         end
     })
-
-    -- Auto Chest Farm
-    gameTab:CreateToggle({
-        Name = "💰 Chest Auto Farm",
-        CurrentValue = false,
-        SectionParent = autoSection,
-        Callback = function(Value)
-            _G.AutoChestFarm = Value
-            if Value then
-                Rayfield:Notify({
-                    Title = "Chest Farm",
-                    Content = "Enabled automatic chest farming",
-                    Duration = 3,
-                    Image = 7733960981
-                })
-            end
-            while _G.AutoChestFarm and task.wait(0.1) do
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.TreasureEvent:FireServer("Chest")
-                end)
-            end
-        end
-    })
-
+    
     -- Секция для телепортации
-    local teleportSection = gameTab:CreateSection("Teleport")
+    local tpSection = gameTab:CreateSection("Teleport")
     
-    -- Teleport to Spawn
+    -- Телепорт к точке
     gameTab:CreateButton({
-        Name = "⬆️ Teleport to Spawn",
-        SectionParent = teleportSection,
+        Name = "📍 Teleport to Base",
+        SectionParent = tpSection,
         Callback = function()
-            local char = game.Players.LocalPlayer.Character
-            if char and char:FindFirstChild("HumanoidRootPart") then
-                char.HumanoidRootPart.CFrame = game:GetService("Workspace").SpawnLocation.CFrame
-                Rayfield:Notify({
-                    Title = "Teleported",
-                    Content = "Moved to spawn point",
-                    Duration = 2,
-                    Image = 7733960981
-                })
-            end
+            -- Код телепортации
         end
     })
-
-    -- Информационная секция
-    local infoSection = gameTab:CreateSection("Info")
-    gameTab:CreateLabel("Game: " .. gameName, infoSection)
-    gameTab:CreateLabel("PlaceID: " .. game.PlaceId, infoSection)
     
+    -- Уведомление о загрузке
     Rayfield:Notify({
-        Title = "Game Features Loaded",
-        Content = "Added special features for " .. gameName,
-        Duration = 5,
+        Title = "Game Features",
+        Content = "Special features loaded!",
+        Duration = 3,
         Image = 7733960981
     })
 end
