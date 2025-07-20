@@ -5,12 +5,17 @@ local tab = Window:CreateTab("Game Features", 7733960981)
 local farmingSection = tab:CreateSection("💸 Farming")
 -- Добавляем элементы
 
+_G.autoChestFarm = false
+_G.autoSpinFarm = false
+_G.infiniteDominusPet = false
+_G.instaWinLoop = false
+
 tab:CreateToggle({
     Name = "💰 Auto Chest Farm",
     CurrentValue = false,
     SectionParent = farmingSection,
-    Callback = function()
-    _G.autoChestFarm = CurrentValue
+    Callback = function(Value)
+    _G.autoChestFarm = Value
         task.spawn(function()
             while _G.autoChestFarm do
                 task.wait(0)
@@ -24,8 +29,8 @@ tab:CreateToggle({
     Name = "💎 Auto Gem Farm",
     CurrentValue = false,
     SectionParent = farmingSection,
-    Callback = function()
-    _G.infiniteDominusPet = CurrentValue
+    Callback = function(Value)
+    _G.infiniteDominusPet = Value
         task.spawn(function()
             while _G.infiniteDominusPet do
                 task.wait(0.0)
@@ -38,8 +43,8 @@ tab:CreateToggle({
     Name = "💰 Auto Farm cash",
     CurrentValue = false,
     SectionParent = farmingSection,
-    Callback = function()
-    _G.infiniteDominusPet = CurrentValue
+    Callback = function(Value)
+    _G.infiniteDominusPet = Value
         task.spawn(function()
             while _G.infiniteDominusPet do
                 task.wait(0.0)
@@ -52,8 +57,8 @@ tab:CreateToggle({
     Name = "🍀 Auto Triple Dominus",
     CurrentValue = false,
     SectionParent = farmingSection,
-    Callback = function()
-    _G.infiniteDominusPet = CurrentValue
+    Callback = function(Value)
+    _G.infiniteDominusPet = Value
         task.spawn(function()
             while _G.infiniteDominusPet do
                 task.wait(0.0)
@@ -66,8 +71,8 @@ tab:CreateToggle({
     Name = "🎡 Unlimited Spins",
     CurrentValue = false,
     SectionParent = farmingSection,
-    Callback = function()         
-    _G.autoSpinFarm = CurrentValue
+    Callback = function(Value)         
+    _G.autoSpinFarm = Value
         task.spawn(function()
             while _G.autoSpinFarm do
                 task.wait(0.5)
