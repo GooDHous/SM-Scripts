@@ -1,7 +1,7 @@
 -- Все функции теперь полностью самодостаточны
-placeName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+
 -- Создаем вкладку
-local tab = Window:CreateTab(placeName)
+local tab = Window:CreateTab("Dig To Earth`s Core")
 local farmingSection = tab:CreateSection("💸 Farming")
 -- Добавляем элементы
 
