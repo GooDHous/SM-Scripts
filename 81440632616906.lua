@@ -72,15 +72,13 @@ tab:CreateToggle({
     CurrentValue = false,
     SectionParent = farmingSection,
     Callback = function(Value)         
-    _G.autoSpinFarm = Value
+    _G.infiniteDominusPet = Value
         task.spawn(function()
-            while _G.autoSpinFarm do
-                task.wait(0.5)
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(3)
-                end)
+            while _G.infiniteDominusPet do
+                task.wait(0.0)
+                game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(3)
             end
-        end)       
+        end)
     end,
 })
 
