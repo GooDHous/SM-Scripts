@@ -11,6 +11,11 @@ local Window = SMUI:CreateWindow({
         FolderName = nil, -- Save file in workspace if nil
         FileName = "SM-Script_Hub_Config"
     },
+    Discord = { -- Optional Discord Invite
+        Enabled = true,
+        Invite = "discord.gg/H5hvXMzN", -- Your discord server invite
+        RememberJoins = true
+    },
     KeySystem = false, 
     Logo = 7229442422, 
     Theme = "Dark",
