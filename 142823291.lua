@@ -2,13 +2,13 @@
 local function CreateExtraTabs()
 
 local tab = Window:CreateTab("Murder Mystery 2", nil) -- Title, Image
-local MainSection = MainTab:CreateSection("Main")
+
 
 
 tab:CreateToggle({
    Name = "Esp",
    CurrentValue = false,
-   Callback = function()
+   Callback = function(Value)
 --[[
 	Modified by SM-Team for SM-Script hub
     Credits to Kiriot22 for the Role getter <3
