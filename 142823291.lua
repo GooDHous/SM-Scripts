@@ -1,84 +1,91 @@
+-- Murder Mystery 2 Hub
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 
-local function CreateExtraTabs()
+-- Функция определения ролей
+local function GetRolePlayer(role)
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character then
+            local back = player.Character:FindFirstChild("Back")
+            if back then
+                local tool = back:FindFirstChildOfClass("Tool")
+                if tool then
+                    if (role == "Sheriff" and tool.Name == "Gun") or
+                       (role == "Murderer" and tool.Name == "Knife") then
+                        return player
+                    end
+                end
+            end
+        end
+    end
+end
 
-local tab = Window:CreateTab("Murder Mystery 2", nil) -- Title, Image
+-- Создаем вкладку MM2
+local MM2Tab = Window:CreateTab("Murder Mystery 2", 4483345998)
 
+-- Секция телепортации
+local TeleportSection = MM2Tab:CreateSection("Teleportation")
 
-
-tab:CreateToggle({
-   Name = "Esp",
-   CurrentValue = false,
-   Callback = function(Value)
-		local ReplicatedStorage = game:GetService("ReplicatedStorage")
-		local Players = game:GetService("Players")
-		local RunService = game:GetService("RunService")
-		local LP = Players.LocalPlayer
-		local roles
-		
-		_G.EnableESP = Value
-		
-		function CreateHighlight() 
-			for i, v in pairs(Players:GetChildren()) do
-				if v ~= LP and v.Character and not v.Character:FindFirstChild("Highlight") then
-					Instance.new("Highlight", v.Character)           
-				end
-			end
-		end
-		
-		function UpdateHighlights() 
-			for _, v in pairs(Players:GetChildren()) do
-				if v ~= LP and v.Character and v.Character:FindFirstChild("Highlight") then
-					Highlight = v.Character:FindFirstChild("Highlight")
-					if v.Name == Sheriff and IsAlive(v) then
-						Highlight.FillColor = Color3.fromRGB(0, 0, 225)
-					elseif v.Name == Murder and IsAlive(v) then
-						Highlight.FillColor = Color3.fromRGB(225, 0, 0)
-					elseif v.Name == Hero and IsAlive(v) and not IsAlive(game.Players[Sheriff]) then
-						Highlight.FillColor = Color3.fromRGB(255, 250, 0)
-					else
-						Highlight.FillColor = Color3.fromRGB(0, 225, 0)
-					end
-				end
-			end
-		end	
-		
-		function IsAlive(Player) 
-			for i, v in pairs(roles) do
-				if Player.Name == i then
-					if not v.Killed and not v.Dead then
-						return true
-					else
-						return false
-					end
-				end
-			end
-		end
-		
-		
-		
-		RunService.RenderStepped:connect(function()
-			roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
-			for i, v in pairs(roles) do
-				if v.Role == "Murderer" then
-					Murder = i
-				elseif v.Role == 'Sheriff'then
-					Sheriff = i
-				elseif v.Role == 'Hero'then
-					Hero = i
-				end
-			end
-			if not _G.EnableESP then
-				Instance.Destroy("Highlight", v.Character) 
-			else
-				CreateHighlight()
-				UpdateHighlights()
-			end
-		end)
-	end,
-
+MM2Tab:CreateButton({
+    Name = "Teleport to Sheriff",
+    Callback = function()
+        local sheriff = GetRolePlayer("Sheriff")
+        if sheriff and sheriff.Character then
+            local hrp = sheriff.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = hrp.CFrame * CFrame.new(0, 0, 2)
+                Rayfield:Notify({
+                    Title = "Teleported to Sheriff!",
+                    Duration = 3
+                })
+            end
+        end
+    end
 })
 
+MM2Tab:CreateButton({
+    Name = "Teleport to Murderer",
+    Callback = function()
+        local murderer = GetRolePlayer("Murderer")
+        if murderer and murderer.Character then
+            local hrp = murderer.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = hrp.CFrame * CFrame.new(0, 0, 2)
+                Rayfield:Notify({
+                    Title = "Teleported to Murderer!",
+                    Duration = 3
+                })
+            end
+        end
+    end
+})
 
+-- Секция автоматизации
+local AutoSection = MM2Tab:CreateSection("Automation")
 
+MM2Tab:CreateToggle({
+    Name = "Auto-Teleport to Murderer",
+    CurrentValue = false,
+    Callback = function(Value)
+        _G.AutoMurdererTP = Value
+        while _G.AutoMurdererTP do
+            local murderer = GetRolePlayer("Murderer")
+            if murderer and murderer.Character and LocalPlayer.Character then
+                local hrp = murderer.Character:FindFirstChild("HumanoidRootPart")
+                local myHrp = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if hrp and myHrp then
+                    myHrp.CFrame = hrp.CFrame * CFrame.new(0, 0, 2)
+                end
+            end
+            task.wait(1)
+        end
+    end
+})
 
-
+-- Уведомление о загрузке
+Rayfield:Notify({
+    Title = "MM2 Hub Loaded",
+    Content = "Special features activated!",
+    Duration = 5,
+    Image = 4483345998
+})
