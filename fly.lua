@@ -1,4 +1,5 @@
-
+-- Made by me_ozoneYT
+-- Modified for SM-Script hub by SM-Team
 -- Gui to Lua
 -- Version: 3.2
 

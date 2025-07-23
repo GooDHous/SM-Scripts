@@ -1,10 +1,13 @@
 -- Made by SM-Team
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/GooDHous/SM-Scripts/refs/heads/main/libui.lua'))()
+
+
+-- Config
 local placename = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 
 local Window = Rayfield:CreateWindow({
-    Name = "Dig to Earth's Core Hub",
-    LoadingTitle = "Loading SM-Script Hub...",
+    Name = placename,
+    LoadingTitle = "Loading Hub...",
     LoadingSubtitle = "Powered by Rayfield UI",
     ConfigurationSaving = {
         Enabled = true,
@@ -14,9 +17,7 @@ local Window = Rayfield:CreateWindow({
 })
 
 
--- Tabs
-local farmingTab = Window:CreateTab(placename, nil)
-local farmingSection = farmingTab:CreateSection("💸 Farming Tools")
+-- Tabs and sections
 local universal = Window:CreateTab("Universal", 4483362458)
 local misc = Window:CreateTab("Misc", 4483362458)
 local infoTab = Window:CreateTab("❓ Info", nil)
@@ -25,93 +26,6 @@ local infoTab = Window:CreateTab("❓ Info", nil)
 local PlayerSection = universal:CreateSection("👤 Player")
 
 
-_G.autoChestFarm = false
-_G.autoGemFarm = false
-_G.autoCashFarm = false
-_G.autoDominusFarm = false
-_G.autoSpinsFarm = false
-
-
-farmingTab:CreateToggle({
-    Name = "💰 Auto Chest Farm",
-    CurrentValue = false,
-    SectionParent = farmingSection,
-    Callback = function(Value)
-        _G.autoChestFarm = Value
-        task.spawn(function()
-            while _G.autoChestFarm and task.wait(0.1) do
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.TreasureEvent:FireServer("Chest")
-                end)
-            end
-        end)              
-    end,
-})
-
-farmingTab:CreateToggle({
-    Name = "💎 Auto Gem Farm",
-    CurrentValue = false,
-    SectionParent = farmingSection,
-    Callback = function(Value)
-        _G.autoGemFarm = Value
-        task.spawn(function()
-            while _G.autoGemFarm and task.wait(0.1) do
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(5)
-                end)
-            end
-        end)                      
-    end,
-})
-
-
-farmingTab:CreateToggle({
-    Name = "💰 Auto Farm Cash",
-    CurrentValue = false,
-    SectionParent = farmingSection,
-    Callback = function(Value)
-        _G.autoCashFarm = Value
-        task.spawn(function()
-            while _G.autoCashFarm and task.wait(0.1) do
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(8)
-                end)
-            end
-        end)        
-    end,
-})
-
-farmingTab:CreateToggle({
-    Name = "🍀 Auto Triple Dominus",
-    CurrentValue = false,
-    SectionParent = farmingSection,
-    Callback = function(Value)
-        _G.autoDominusFarm = Value
-        task.spawn(function()
-            while _G.autoDominusFarm and task.wait(0.1) do
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(4)
-                end)
-            end
-        end)                        
-    end,
-})
-
-farmingTab:CreateToggle({
-    Name = "🎡 Unlimited Spins",
-    CurrentValue = false,
-    SectionParent = farmingSection,
-    Callback = function(Value)         
-        _G.autoSpinsFarm = Value
-        task.spawn(function()
-            while _G.autoSpinsFarm and task.wait(0.1) do
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.SpinPrizeEvent:FireServer(3)
-                end)
-            end
-        end)
-    end,
-})
 
 -- Values
 local currentSpeed = 16
@@ -263,8 +177,6 @@ misc:CreateButton({
     end
 })
 
-
-
 Rayfield:Notify({
     Title = "SM-Scripts hub loaded",
     Content = "Welcome to our comunity!",
@@ -279,7 +191,7 @@ infoTab:CreateLabel("Hub Version: 1.0")
 infoTab:CreateButton({
     Name = "Unload UI",
     Callback = function()
-		game:GetService("Workspace").CurrentCamera.FieldOfView = 70
+	game:GetService("Workspace").CurrentCamera.FieldOfView = 70
         Rayfield:Destroy()
     end
 })
